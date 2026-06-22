@@ -22,6 +22,13 @@
       "when": 1782109307454,
       "tag": "0002_category_parent",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1782111274187,
+      "tag": "0003_scenarios",
+      "breakpoints": true
     }
   ]
 }

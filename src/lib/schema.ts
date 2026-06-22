@@ -7,6 +7,7 @@ import {
   numeric,
   date,
   unique,
+  jsonb,
   type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 
@@ -176,6 +177,24 @@ export const debts = pgTable("debts", {
 });
 
 export type Debt = typeof debts.$inferSelect;
+
+export type ScenarioAdjustment = { key: string; included: boolean; amount: number };
+
+// Escenarios "what-if": ajustes (omitir/cambiar monto) sobre las categorías de un mes.
+export const scenarios = pgTable("scenarios", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ownerId: uuid("owner_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  statementId: uuid("statement_id")
+    .references(() => statements.id, { onDelete: "cascade" })
+    .notNull(),
+  name: text("name").notNull(),
+  adjustments: jsonb("adjustments").$type<ScenarioAdjustment[]>().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
+export type Scenario = typeof scenarios.$inferSelect;
 
 // Tabla de ejemplo del starter. Se mantiene fuera del producto pero no estorba.
 export const items = pgTable("items", {

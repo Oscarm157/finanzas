@@ -9,16 +9,18 @@ type Item = { id: string; periodStart: string; periodEnd: string };
 export function PeriodSelector({
   statements,
   current,
+  basePath = "/dashboard",
 }: {
   statements: Item[];
   current: string;
+  basePath?: string;
 }) {
   const router = useRouter();
 
   return (
     <select
       value={current}
-      onChange={(e) => router.push(`/dashboard?statement=${e.target.value}`)}
+      onChange={(e) => router.push(`${basePath}?statement=${e.target.value}`)}
       aria-label="Periodo"
       className="h-9 rounded-md border border-line bg-white px-3 text-sm font-medium text-navy outline-none transition-colors focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/30"
     >

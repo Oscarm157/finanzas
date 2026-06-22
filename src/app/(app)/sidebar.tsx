@@ -8,6 +8,7 @@ import {
   Upload,
   Landmark,
   Tags,
+  SlidersHorizontal,
   LogOut,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ import { cn } from "@/lib/utils";
 const nav = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/transactions", label: "Movimientos", icon: ArrowLeftRight },
+  { href: "/scenarios", label: "Escenarios", icon: SlidersHorizontal },
   { href: "/import", label: "Importar", icon: Upload },
   { href: "/debts", label: "Deudas", icon: Landmark },
   { href: "/categories", label: "Categorías", icon: Tags },

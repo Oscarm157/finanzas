@@ -1,6 +1,6 @@
 import { and, desc, eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { categories, statements, transactions } from "@/lib/schema";
+import { categories, scenarios, statements, transactions } from "@/lib/schema";
 
 const n = (v: string | null) => (v ? parseFloat(v) : 0);
 
@@ -110,6 +110,14 @@ export async function listCategories(ownerId: string) {
     .orderBy(categories.kind, categories.name);
 }
 
+export async function listScenarios(ownerId: string, statementId: string) {
+  return db
+    .select()
+    .from(scenarios)
+    .where(and(eq(scenarios.ownerId, ownerId), eq(scenarios.statementId, statementId)))
+    .orderBy(desc(scenarios.createdAt));
+}
+
 // Categorías con el número de movimientos que tienen (para la página de gestión).
 export async function listCategoriesWithCounts(ownerId: string) {
   return db
@@ -165,7 +173,7 @@ export async function getDashboard(ownerId: string, statementId?: string) {
   const catMap = new Map(cats.map((c) => [c.id, c]));
 
   type Child = { name: string; color: string; total: number };
-  type Parent = { name: string; color: string; total: number; children: Map<string, Child> };
+  type Parent = { id: string; name: string; color: string; total: number; children: Map<string, Child> };
 
   // Agrupa por categoría de nivel superior; las subcategorías quedan como `children`
   // (incluye un bucket "Directo" para lo asignado al padre mismo).
@@ -178,6 +186,7 @@ export async function getDashboard(ownerId: string, statementId?: string) {
       const p =
         parents.get(topId) ??
         {
+          id: topId,
           name: top?.name ?? "Sin categoría",
           color: top?.color ?? "#cbd2dd",
           total: 0,
@@ -209,6 +218,7 @@ export async function getDashboard(ownerId: string, statementId?: string) {
           }));
         const hasSubs = children.some((c) => c.name !== "Directo");
         return {
+          id: p.id,
           name: p.name,
           color: p.color,
           total: p.total,
