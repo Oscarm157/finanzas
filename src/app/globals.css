@@ -3,46 +3,34 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-}
+  --radius: 0.75rem;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* Superficies */
+  --background: #ffffff;
+  --foreground: #16203a;
+  --card: #ffffff;
+  --card-foreground: #16203a;
+  --popover: #ffffff;
+  --popover-foreground: #16203a;
+
+  /* Acento de marca (un solo azul, con disciplina) */
+  --primary: #2456e6;
+  --primary-foreground: #ffffff;
+
+  /* Banda suave / realce */
+  --secondary: #f6f8fb;
+  --secondary-foreground: #16203a;
+  --muted: #f6f8fb;
+  --muted-foreground: #5b6678;
+  --accent: #eef3fd;
+  --accent-foreground: #1b46c9;
+
+  --destructive: #d23f3f;
+
+  /* Líneas hairline */
+  --border: #e7ecf4;
+  --input: #e7ecf4;
+  --ring: #2456e6;
 }
 
 @theme inline {
@@ -64,8 +52,23 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Tokens semánticos del proyecto */
+  --color-navy: #16203a;
+  --color-ink: #5b6678;
+  --color-faint: #8a94a6;
+  --color-brand: #2456e6;
+  --color-brand-hover: #1b46c9;
+  --color-brand-soft: #eef3fd;
+  --color-line: #e7ecf4;
+  --color-surface: #f6f8fb;
+  --color-income: #0f9d58;
+  --color-warn: #e8a33d;
+  --color-alert: #d23f3f;
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

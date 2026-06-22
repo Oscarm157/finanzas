@@ -6,6 +6,7 @@ const schema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL es requerida."),
   AUTH_SECRET: z.string().min(16, "AUTH_SECRET debe tener al menos 16 caracteres."),
   BLOB_READ_WRITE_TOKEN: z.string().optional(),
+  ANTHROPIC_API_KEY: z.string().optional(),
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().email().optional().or(z.literal("")),
 });

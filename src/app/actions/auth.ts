@@ -27,7 +27,8 @@ async function setSessionCookie(userId: string) {
   const jar = await cookies();
   jar.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: true,
+    // Secure por defecto; se baja solo para preview por IP sobre HTTP (PREVIEW_HTTP=1).
+    secure: process.env.PREVIEW_HTTP !== "1",
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_MAX_AGE_SECONDS,
