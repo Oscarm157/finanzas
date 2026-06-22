@@ -34,7 +34,12 @@ export default async function TransactionsPage() {
     );
   }
 
-  const options = cats.map((c) => ({ id: c.id, name: c.name }));
+  const options = cats.map((c) => ({
+    id: c.id,
+    name: c.name,
+    kind: c.kind,
+    parentId: c.parentId,
+  }));
 
   return (
     <div className="space-y-6">

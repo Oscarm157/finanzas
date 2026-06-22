@@ -39,10 +39,10 @@ export default async function ReviewPage({
 
   const incomeCats = cats
     .filter((c) => c.kind === "income")
-    .map((c) => ({ id: c.id, name: c.name }));
+    .map((c) => ({ id: c.id, name: c.name, kind: c.kind, parentId: c.parentId }));
   const expenseCats = cats
     .filter((c) => c.kind === "expense")
-    .map((c) => ({ id: c.id, name: c.name }));
+    .map((c) => ({ id: c.id, name: c.name, kind: c.kind, parentId: c.parentId }));
 
   const totals = [
     { label: "Depósitos", value: num(stmt.depositos), tone: "income" as const },

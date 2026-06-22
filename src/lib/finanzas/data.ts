@@ -118,8 +118,10 @@ export async function listCategoriesWithCounts(ownerId: string) {
       name: categories.name,
       kind: categories.kind,
       color: categories.color,
+      parentId: categories.parentId,
       excludeFromFlow: categories.excludeFromFlow,
       count: sql<number>`count(${transactions.id})::int`,
+      total: sql<number>`coalesce(sum(${transactions.amount}), 0)::float`,
     })
     .from(categories)
     .leftJoin(transactions, eq(transactions.categoryId, categories.id))
@@ -150,35 +152,74 @@ export async function getDashboard(ownerId: string, statementId?: string) {
   const ingresos = flow.filter((t) => t.direction === "in").reduce((a, t) => a + t.amount, 0);
   const gastos = flow.filter((t) => t.direction === "out").reduce((a, t) => a + t.amount, 0);
 
-  // Gasto por categoría (solo egresos no internos).
-  const byCat = new Map<string, { name: string; color: string; total: number }>();
-  for (const t of flow.filter((t) => t.direction === "out")) {
-    const key = t.categoryId ?? "none";
-    const name = t.categoryName ?? "Sin categoría";
-    const color = t.categoryColor ?? "#cbd2dd";
-    const cur = byCat.get(key) ?? { name, color, total: 0 };
-    cur.total += t.amount;
-    byCat.set(key, cur);
-  }
-  const spendByCategory = [...byCat.values()]
-    .sort((a, b) => b.total - a.total)
-    .map((c) => ({ ...c, pct: gastos ? Math.round((c.total / gastos) * 100) : 0 }));
+  // Categorías del usuario para hacer rollup de subcategorías a su padre.
+  const cats = await db
+    .select({
+      id: categories.id,
+      parentId: categories.parentId,
+      name: categories.name,
+      color: categories.color,
+    })
+    .from(categories)
+    .where(eq(categories.ownerId, ownerId));
+  const catMap = new Map(cats.map((c) => [c.id, c]));
 
-  // Ingreso por categoría (solo entradas no internas).
-  const inByCat = new Map<string, { name: string; color: string; total: number }>();
-  for (const t of flow.filter((t) => t.direction === "in")) {
-    const key = t.categoryId ?? "none";
-    const cur = inByCat.get(key) ?? {
-      name: t.categoryName ?? "Sin categoría",
-      color: t.categoryColor ?? "#cbd2dd",
-      total: 0,
-    };
-    cur.total += t.amount;
-    inByCat.set(key, cur);
+  type Child = { name: string; color: string; total: number };
+  type Parent = { name: string; color: string; total: number; children: Map<string, Child> };
+
+  // Agrupa por categoría de nivel superior; las subcategorías quedan como `children`
+  // (incluye un bucket "Directo" para lo asignado al padre mismo).
+  function rollup(list: TxRow[], denom: number) {
+    const parents = new Map<string, Parent>();
+    for (const t of list) {
+      const c = t.categoryId ? catMap.get(t.categoryId) : undefined;
+      const top = c?.parentId ? catMap.get(c.parentId) : c;
+      const topId = top?.id ?? "none";
+      const p =
+        parents.get(topId) ??
+        {
+          name: top?.name ?? "Sin categoría",
+          color: top?.color ?? "#cbd2dd",
+          total: 0,
+          children: new Map<string, Child>(),
+        };
+      p.total += t.amount;
+      if (c?.parentId) {
+        const ch = p.children.get(c.id) ?? { name: c.name, color: c.color, total: 0 };
+        ch.total += t.amount;
+        p.children.set(c.id, ch);
+      } else if (c) {
+        const ch = p.children.get("_direct") ?? { name: "Directo", color: p.color, total: 0 };
+        ch.total += t.amount;
+        p.children.set("_direct", ch);
+      }
+      parents.set(topId, p);
+    }
+    return [...parents.values()]
+      .sort((a, b) => b.total - a.total)
+      .map((p) => {
+        const children = [...p.children.values()]
+          .filter((c) => c.total > 0)
+          .sort((a, b) => b.total - a.total)
+          .map((c) => ({
+            name: c.name,
+            color: c.color,
+            total: c.total,
+            pct: p.total ? Math.round((c.total / p.total) * 100) : 0,
+          }));
+        const hasSubs = children.some((c) => c.name !== "Directo");
+        return {
+          name: p.name,
+          color: p.color,
+          total: p.total,
+          pct: denom ? Math.round((p.total / denom) * 100) : 0,
+          children: hasSubs ? children : [],
+        };
+      });
   }
-  const incomeByCategory = [...inByCat.values()]
-    .sort((a, b) => b.total - a.total)
-    .map((c) => ({ ...c, pct: ingresos ? Math.round((c.total / ingresos) * 100) : 0 }));
+
+  const spendByCategory = rollup(flow.filter((t) => t.direction === "out"), gastos);
+  const incomeByCategory = rollup(flow.filter((t) => t.direction === "in"), ingresos);
 
   // Cashflow por día (entradas vs salidas, sin internos).
   const byDay = new Map<string, { date: string; in: number; out: number }>();

@@ -44,6 +44,7 @@ const CATEGORIES = [
   { name: "Entretenimiento", kind: "expense", color: "#7a5af0", icon: "party-popper" },
   { name: "Compras", kind: "expense", color: "#e8694a", icon: "bag" },
   { name: "Hogar", kind: "expense", color: "#0fa3a3", icon: "home" },
+  { name: "Préstamo", kind: "expense", color: "#e8a33d", icon: "hand-coins" },
   { name: "Otros gastos", kind: "expense", color: "#8a94a6", icon: "circle" },
   { name: "Nómina e ingresos", kind: "income", color: "#0f9d58", icon: "wallet" },
   { name: "Depósitos recibidos", kind: "income", color: "#2456e6", icon: "arrow-down" },

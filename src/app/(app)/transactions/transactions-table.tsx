@@ -9,8 +9,8 @@ import { updateTransactionCategories } from "@/app/(app)/import/actions";
 import { money, parseDetail, shortDate } from "@/lib/finanzas/format";
 import { cn } from "@/lib/utils";
 import { CategorySelect } from "@/components/category-select";
+import { categoryOptionNodes, type CatOpt } from "@/components/category-options";
 
-type Option = { id: string; name: string };
 type Dir = "all" | "in" | "out";
 
 export function TransactionsTable({
@@ -18,7 +18,7 @@ export function TransactionsTable({
   options,
 }: {
   rows: TxRow[];
-  options: Option[];
+  options: CatOpt[];
 }) {
   const [dir, setDir] = useState<Dir>("all");
   const [cat, setCat] = useState<string>("all");
@@ -108,11 +108,7 @@ export function TransactionsTable({
           >
             <option value="all">Todas las categorías</option>
             <option value="none">Sin categoría</option>
-            {options.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.name}
-              </option>
-            ))}
+            {categoryOptionNodes(options)}
           </select>
           <div className="relative flex-1 sm:max-w-56">
             <Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-faint" />
@@ -138,11 +134,7 @@ export function TransactionsTable({
               className="h-9 max-w-52 rounded-md border border-line bg-white px-2 text-sm text-navy outline-none focus-visible:border-brand"
             >
               <option value="">Sin categoría</option>
-              {options.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.name}
-                </option>
-              ))}
+              {categoryOptionNodes(options)}
             </select>
             <button
               type="button"

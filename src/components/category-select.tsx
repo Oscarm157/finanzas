@@ -3,9 +3,8 @@
 import { useState, useTransition } from "react";
 
 import { updateTransactionCategory } from "@/app/(app)/import/actions";
+import { categoryOptionNodes, type CatOpt } from "@/components/category-options";
 import { cn } from "@/lib/utils";
-
-type Option = { id: string; name: string };
 
 export function CategorySelect({
   txId,
@@ -14,7 +13,7 @@ export function CategorySelect({
 }: {
   txId: string;
   categoryId: string | null;
-  options: Option[];
+  options: CatOpt[];
 }) {
   const [value, setValue] = useState(categoryId ?? "");
   const [pending, startTransition] = useTransition();
@@ -38,11 +37,7 @@ export function CategorySelect({
       )}
     >
       <option value="">Sin categoría</option>
-      {options.map((o) => (
-        <option key={o.id} value={o.id}>
-          {o.name}
-        </option>
-      ))}
+      {categoryOptionNodes(options)}
     </select>
   );
 }
