@@ -5,15 +5,27 @@ import { motion, useReducedMotion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-import { money } from "@/lib/finanzas/format";
+import { money, shortDate } from "@/lib/finanzas/format";
 import { cn } from "@/lib/utils";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 type Child = { name: string; color: string; total: number; pct: number };
-type Slice = { name: string; color: string; total: number; pct: number; children?: Child[] };
+type Item = { description: string; amount: number; date: string };
+type Member = { name: string; color: string; total: number; pct: number };
+type Slice = {
+  name: string;
+  color: string;
+  total: number;
+  pct: number;
+  children?: Child[];
+  items?: Item[];
+  members?: Member[];
+};
 
 const MAX_ROWS = 7;
 
 // Agrupa la cola larga en "Otras (N)" para que la lista nunca crezca sin control.
+// El detalle de qué categorías la forman va en `members` (para el hover).
 function groupRows(data: Slice[]): Slice[] {
   const sorted = [...data].sort((a, b) => b.total - a.total);
   if (sorted.length <= MAX_ROWS + 1) return sorted;
@@ -24,6 +36,7 @@ function groupRows(data: Slice[]): Slice[] {
     color: "#64748b",
     total: tail.reduce((s, x) => s + x.total, 0),
     pct: tail.reduce((s, x) => s + x.pct, 0),
+    members: tail.map((t) => ({ name: t.name, color: t.color, total: t.total, pct: t.pct })),
   };
   return [...head, rest];
 }
@@ -101,36 +114,88 @@ export function SpendDonut({
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.35, delay: 0.12 + i * 0.05 }}
             >
-              <button
-                type="button"
-                onClick={() => hasChildren && toggle(s.name)}
-                className={cn(
-                  "flex w-full items-center gap-2.5 text-left text-sm",
-                  !hasChildren && "cursor-default",
-                )}
-              >
-                {hasChildren ? (
-                  <ChevronRight
+              <HoverCard openDelay={120} closeDelay={80}>
+                <HoverCardTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={() => hasChildren && toggle(s.name)}
                     className={cn(
-                      "size-3.5 shrink-0 text-faint transition-transform",
-                      expanded && "rotate-90",
+                      "flex w-full items-center gap-2.5 text-left text-sm",
+                      !hasChildren && "cursor-default",
                     )}
-                  />
-                ) : (
-                  <span className="w-3.5 shrink-0" />
-                )}
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: s.color }}
-                />
-                <span className="min-w-0 flex-1 truncate text-navy">{s.name}</span>
-                <span className="w-28 shrink-0 text-right tabular-nums text-ink">
-                  {money(s.total)}
-                </span>
-                <span className="w-10 shrink-0 text-right tabular-nums text-faint">
-                  {s.pct}%
-                </span>
-              </button>
+                  >
+                    {hasChildren ? (
+                      <ChevronRight
+                        className={cn(
+                          "size-3.5 shrink-0 text-faint transition-transform",
+                          expanded && "rotate-90",
+                        )}
+                      />
+                    ) : (
+                      <span className="w-3.5 shrink-0" />
+                    )}
+                    <span
+                      className="size-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: s.color }}
+                    />
+                    <span className="min-w-0 flex-1 truncate text-navy">{s.name}</span>
+                    <span className="w-28 shrink-0 text-right tabular-nums text-ink">
+                      {money(s.total)}
+                    </span>
+                    <span className="w-10 shrink-0 text-right tabular-nums text-faint">
+                      {s.pct}%
+                    </span>
+                  </button>
+                </HoverCardTrigger>
+                {s.members?.length ? (
+                  <HoverCardContent align="start" className="w-80">
+                    <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-faint">
+                      {s.name}
+                    </div>
+                    <ul className="space-y-1.5">
+                      {s.members.map((m) => (
+                        <li key={m.name} className="flex items-center gap-2 text-sm">
+                          <span
+                            className="size-2 shrink-0 rounded-full"
+                            style={{ backgroundColor: m.color }}
+                          />
+                          <span className="min-w-0 flex-1 truncate text-navy">{m.name}</span>
+                          <span className="shrink-0 tabular-nums text-ink">{money(m.total)}</span>
+                          <span className="w-9 shrink-0 text-right tabular-nums text-faint">
+                            {m.pct}%
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </HoverCardContent>
+                ) : s.items?.length ? (
+                  <HoverCardContent align="start" className="w-80">
+                    <div className="mb-2 flex items-center justify-between gap-2">
+                      <span className="truncate text-xs font-semibold uppercase tracking-wide text-faint">
+                        {s.name}
+                      </span>
+                      <span className="shrink-0 text-xs tabular-nums text-ink">
+                        {money(s.total)}
+                      </span>
+                    </div>
+                    <ul className="max-h-64 space-y-1.5 overflow-y-auto pr-1">
+                      {s.items.map((it, idx) => (
+                        <li key={idx} className="flex items-baseline gap-2 text-sm">
+                          <span className="min-w-0 flex-1 truncate text-navy">
+                            {it.description}
+                          </span>
+                          <span className="shrink-0 text-xs tabular-nums text-faint">
+                            {shortDate(it.date)}
+                          </span>
+                          <span className="w-20 shrink-0 text-right tabular-nums text-ink">
+                            {money(it.amount)}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </HoverCardContent>
+                ) : null}
+              </HoverCard>
 
               <div className="mt-1.5 ml-[22px] h-1.5 overflow-hidden rounded-full bg-surface">
                 <motion.div

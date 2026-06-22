@@ -182,7 +182,15 @@ export async function getDashboard(ownerId: string, statementId?: string) {
   const catMap = new Map(cats.map((c) => [c.id, c]));
 
   type Child = { name: string; color: string; total: number };
-  type Parent = { id: string; name: string; color: string; total: number; children: Map<string, Child> };
+  type Item = { description: string; amount: number; date: string };
+  type Parent = {
+    id: string;
+    name: string;
+    color: string;
+    total: number;
+    children: Map<string, Child>;
+    items: Item[];
+  };
 
   // Agrupa por categoría de nivel superior; las subcategorías quedan como `children`
   // (incluye un bucket "Directo" para lo asignado al padre mismo).
@@ -200,8 +208,10 @@ export async function getDashboard(ownerId: string, statementId?: string) {
           color: top?.color ?? "#cbd2dd",
           total: 0,
           children: new Map<string, Child>(),
+          items: [],
         };
       p.total += t.amount;
+      p.items.push({ description: t.description, amount: t.amount, date: t.date });
       if (c?.parentId) {
         const ch = p.children.get(c.id) ?? { name: c.name, color: c.color, total: 0 };
         ch.total += t.amount;
@@ -233,6 +243,7 @@ export async function getDashboard(ownerId: string, statementId?: string) {
           total: p.total,
           pct: denom ? Math.round((p.total / denom) * 100) : 0,
           children: hasSubs ? children : [],
+          items: [...p.items].sort((a, b) => b.amount - a.amount),
         };
       });
   }
