@@ -68,8 +68,11 @@ export async function getStatementTransactions(
   return rows.map((r) => ({ ...r, amount: n(r.amount), categoryExcluded: !!r.categoryExcluded }));
 }
 
-// Movimientos de flujo (sin cajitas internas) para categorizar manualmente.
-export async function getTransactions(ownerId: string): Promise<TxRow[]> {
+// Movimientos de flujo (sin cajitas internas) de un mes (statement), para categorizar.
+export async function getTransactions(
+  ownerId: string,
+  statementId: string,
+): Promise<TxRow[]> {
   const rows = await db
     .select({
       id: transactions.id,
@@ -89,7 +92,13 @@ export async function getTransactions(ownerId: string): Promise<TxRow[]> {
     })
     .from(transactions)
     .leftJoin(categories, eq(transactions.categoryId, categories.id))
-    .where(and(eq(transactions.ownerId, ownerId), eq(transactions.isInternal, false)))
+    .where(
+      and(
+        eq(transactions.ownerId, ownerId),
+        eq(transactions.statementId, statementId),
+        eq(transactions.isInternal, false),
+      ),
+    )
     .orderBy(desc(transactions.date));
   return rows.map((r) => ({ ...r, amount: n(r.amount), categoryExcluded: !!r.categoryExcluded }));
 }
