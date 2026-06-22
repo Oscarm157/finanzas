@@ -10,7 +10,6 @@ import { StatusChip } from "@/components/status-chip";
 import { Button } from "@/components/ui/button";
 import { KpiRow } from "./kpi-row";
 import { SpendDonut } from "./spend-donut";
-import { IncomeComposition } from "./income-composition";
 import { CashflowChart } from "./cashflow-chart";
 import { PeriodSelector } from "./period-selector";
 
@@ -81,7 +80,12 @@ export default async function DashboardPage({
               Ingreso por categoría
             </h2>
           </div>
-          <IncomeComposition data={incomeByCategory} total={kpis.ingresos} />
+          <SpendDonut
+            data={incomeByCategory}
+            total={kpis.ingresos}
+            label="Ingreso"
+            emptyText="Sin ingresos en este periodo."
+          />
         </section>
 
         <section className="rounded-xl border border-line bg-white p-5 lg:p-6">

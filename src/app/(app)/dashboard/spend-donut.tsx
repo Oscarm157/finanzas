@@ -61,8 +61,8 @@ export function SpendDonut({
     });
 
   return (
-    <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-[200px_1fr]">
-      <div className="relative mx-auto h-48 w-48 sm:h-52 sm:w-52">
+    <div className="flex flex-col items-center gap-6">
+      <div className="relative h-48 w-48 sm:h-52 sm:w-52">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -90,7 +90,7 @@ export function SpendDonut({
         </div>
       </div>
 
-      <ul className="space-y-3">
+      <ul className="w-full space-y-3">
         {rows.map((s, i) => {
           const hasChildren = !!s.children?.length;
           const expanded = open.has(s.name);
