@@ -10,6 +10,7 @@ import { StatusChip } from "@/components/status-chip";
 import { Button } from "@/components/ui/button";
 import { KpiRow } from "./kpi-row";
 import { SpendDonut } from "./spend-donut";
+import { IncomeComposition } from "./income-composition";
 import { CashflowChart } from "./cashflow-chart";
 import { PeriodSelector } from "./period-selector";
 
@@ -73,24 +74,22 @@ export default async function DashboardPage({
         saldoFinal={kpis.saldoFinal}
       />
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <section className="rounded-xl border border-line bg-white p-5">
-          <h2 className="mb-4 text-sm font-semibold text-navy">Ingreso por categoría</h2>
-          <SpendDonut
-            data={incomeByCategory}
-            total={kpis.ingresos}
-            label="Ingreso"
-            emptyText="Sin ingresos en este periodo."
-          />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <section className="rounded-xl border border-line bg-white p-5 lg:col-span-2 lg:p-6">
+          <div className="mb-5">
+            <h2 className="text-sm font-semibold text-navy">Gasto por categoría</h2>
+            <p className="text-xs text-faint">A dónde se fue el dinero este periodo</p>
+          </div>
+          <SpendDonut data={spendByCategory} total={kpis.gastos} />
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5">
-          <h2 className="mb-4 text-sm font-semibold text-navy">Gasto por categoría</h2>
-          <SpendDonut data={spendByCategory} total={kpis.gastos} />
+        <section className="rounded-xl border border-line bg-white p-5 lg:p-6">
+          <h2 className="mb-5 text-sm font-semibold text-navy">Ingreso por categoría</h2>
+          <IncomeComposition data={incomeByCategory} total={kpis.ingresos} />
         </section>
       </div>
 
-      <section className="rounded-xl border border-line bg-white p-5">
+      <section className="rounded-xl border border-line bg-surface p-5 sm:p-6">
         <div className="mb-4 flex items-center gap-4">
           <h2 className="text-sm font-semibold text-navy">Entradas y salidas</h2>
           <div className="flex items-center gap-3 text-xs text-ink">
