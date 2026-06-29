@@ -26,7 +26,7 @@ export function Drawer({
   if (!open) return null;
 
   return (
-    <div className="dark fixed inset-0 z-50 flex justify-end">
+    <div className="fixed inset-0 z-50 flex justify-end">
       <button
         aria-label="Cerrar"
         onClick={onClose}
