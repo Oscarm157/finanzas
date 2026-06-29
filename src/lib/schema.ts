@@ -281,3 +281,65 @@ export const habitAchievements = pgTable(
 );
 
 export type HabitAchievement = typeof habitAchievements.$inferSelect;
+
+// ------- Módulo Pendientes (kanban personal) -------
+
+export type PersonalTaskStatus = "todo" | "doing" | "done";
+
+export const personalTasks = pgTable("personal_tasks", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ownerId: uuid("owner_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  title: text("title").notNull(),
+  notes: text("notes"),
+  status: text("status").$type<PersonalTaskStatus>().notNull().default("todo"),
+  priority: integer("priority").notNull().default(0),
+  position: integer("position").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+});
+
+export type PersonalTask = typeof personalTasks.$inferSelect;
+
+// ------- Módulo Código (kanban de desarrollo) -------
+
+export type CodeCardStatus = "backlog" | "in_progress" | "blocked" | "done";
+export type CodeCardPriority = "low" | "med" | "high";
+export type CodeNoteAuthor = "oscar" | "claude";
+
+export const codeCards = pgTable("code_cards", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ownerId: uuid("owner_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  project: text("project").notNull(),
+  title: text("title").notNull(),
+  spec: text("spec"),
+  status: text("status").$type<CodeCardStatus>().notNull().default("backlog"),
+  priority: text("priority").$type<CodeCardPriority>().notNull().default("med"),
+  labels: jsonb("labels").$type<string[]>().notNull().default([]),
+  repo: text("repo"),
+  branch: text("branch"),
+  prUrl: text("pr_url"),
+  position: integer("position").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+});
+
+export type CodeCard = typeof codeCards.$inferSelect;
+
+export const codeCardNotes = pgTable("code_card_notes", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ownerId: uuid("owner_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  cardId: uuid("card_id")
+    .references(() => codeCards.id, { onDelete: "cascade" })
+    .notNull(),
+  author: text("author").$type<CodeNoteAuthor>().notNull(),
+  body: text("body").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
+export type CodeCardNote = typeof codeCardNotes.$inferSelect;

@@ -24,3 +24,19 @@ el diseño es bespoke por cliente (no hay sistema de diseño aquí, shadcn neutr
 - Blob (`src/lib/blob.ts`), Resend (`src/lib/email.ts`), env validado (`src/lib/env.ts`).
 - Sentry guardado por DSN, CI (tsc+lint+build), Playwright smoke con screenshot.
 - Tabla `items` + página de ejemplo: CRUD con los tres estados. Bórrala al arrancar de verdad.
+
+## Tablero de Código (para agentes)
+Hay un kanban de desarrollo multi-repo en `/codigo` (DB Neon, tablas `code_cards` + `code_card_notes`).
+Es donde Oscar y Claude coordinan tareas de código y se dejan notas/preguntas que se leen después.
+
+Al entrar a una tarea de código, **revisa el tablero primero** y deja tus dudas ahí en vez de perderlas:
+```
+npm run kanban -- board                 # ver columnas y cards de todos los repos
+npm run kanban -- board --project X      # filtrar por repo
+npm run kanban -- card <id>              # spec + hilo de notas de una card
+npm run kanban -- note <id> "pregunta"  # dejar una nota (queda como author=claude)
+npm run kanban -- move <id> in_progress # mover de columna (backlog|in_progress|blocked|done)
+npm run kanban -- add --project X --title "..." [--spec "..." --priority high]
+```
+Las mutaciones desde la web pasan por `requireUser()`; el CLI resuelve el owner por `OWNER_EMAIL`
+(o el primer usuario) y se corre local con `.env.local` ya cargado por el script `kanban`.
