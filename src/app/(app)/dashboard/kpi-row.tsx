@@ -54,11 +54,11 @@ export function KpiRow({
       initial={reduce ? false : { opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="overflow-hidden rounded-2xl bg-navy px-6 py-7 text-white sm:px-8 sm:py-8"
+      className="overflow-hidden rounded-2xl bg-hero px-6 py-7 text-hero-foreground sm:px-8 sm:py-8"
     >
       <div className="grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-12">
         <div>
-          <span className="text-xs font-medium uppercase tracking-[0.14em] text-white/45">
+          <span className="text-xs font-medium uppercase tracking-[0.14em] text-hero-foreground/45">
             Balance del periodo
           </span>
           <div
@@ -68,9 +68,9 @@ export function KpiRow({
             {!positivo && "-"}
             <CountUp value={Math.abs(balance)} />
           </div>
-          <p className="mt-3 text-sm text-white/55">
+          <p className="mt-3 text-sm text-hero-foreground/55">
             Saldo final del periodo{" "}
-            <span className="font-medium tabular-nums text-white/85">
+            <span className="font-medium tabular-nums text-hero-foreground/85">
               {money(saldoFinal)}
             </span>
           </p>
@@ -89,7 +89,7 @@ export function KpiRow({
 
           <div className="mt-4 grid grid-cols-2 gap-4">
             <div>
-              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-white/45">
+              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-hero-foreground/45">
                 <span className="size-2 rounded-full" style={{ backgroundColor: "#34d27b" }} />
                 Entró
               </div>
@@ -98,11 +98,11 @@ export function KpiRow({
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-white/45">
+              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-hero-foreground/45">
                 <span className="size-2 rounded-full" style={{ backgroundColor: "#3b6dff" }} />
                 Salió
               </div>
-              <div className="mt-1 font-display text-xl font-semibold tabular-nums text-white/90">
+              <div className="mt-1 font-display text-xl font-semibold tabular-nums text-hero-foreground/90">
                 <CountUp value={gastos} />
               </div>
             </div>

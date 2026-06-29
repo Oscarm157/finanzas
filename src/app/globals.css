@@ -50,6 +50,10 @@
   --warn: #e8a33d;
   --alert: #d23f3f;
 
+  /* Panel "hero" oscuro de finanzas (invierte: oscuro en light, elevado en dark) */
+  --hero: #16203a;
+  --hero-foreground: #ffffff;
+
   /* Familia gamificada (--h-*) en LIGHT. Los 8 acentos por hábito son dato en
      DB y no cambian por tema; viven aquí y se heredan dentro de .dark. */
   --h-canvas: #f6f7f9;
@@ -106,6 +110,8 @@
   --color-expense: var(--expense);
   --color-warn: var(--warn);
   --color-alert: var(--alert);
+  --color-hero: var(--hero);
+  --color-hero-foreground: var(--hero-foreground);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-display);
@@ -168,6 +174,8 @@
   --expense: #fb7185;
   --warn: #fbbf24;
   --alert: #f43f5e;
+  --hero: #29273f;
+  --hero-foreground: #f7f7ff;
 
   --h-canvas: #141320;
   --h-canvas-alt: #191826;

@@ -120,7 +120,7 @@ export function CardForm({
         </div>
       </div>
 
-      {error ? <p className="text-sm text-[#f87171]">{error}</p> : null}
+      {error ? <p className="text-sm text-[var(--alert)]">{error}</p> : null}
 
       <div className="flex justify-end gap-2 pt-1">
         <button
