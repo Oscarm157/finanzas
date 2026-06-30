@@ -41,9 +41,10 @@ No promediar: la base es Superlist (mood + densidad + superficies). De Stryds so
 números display y el neón de acción. De Duolingo solo la estructura de gamificación.
 
 ## Tema y atmósfera
-Light de día (claro, aireado, editorial), dark cuando se prende el switch (vivo, jugable). Pensado para
-TDAH en ambos modos: claridad instantánea, memoria visual externa (el heatmap), recompensa inmediata al
-completar, perdón al fallar. Nada de ruido gratuito.
+Light es el default de sesión nueva; dark se activa por switch y persiste en localStorage. Ambos modos
+usan los mismos tokens, con los overrides de la sección Paleta. Pensado para TDAH en ambos modos:
+claridad instantánea, memoria visual externa (el heatmap), recompensa inmediata al completar, perdón al
+fallar. Nada de ruido gratuito.
 
 ## Paleta (roles semánticos · light / dark)
 Los nombres son roles de token; el valor cambia por modo. `light` es el default.

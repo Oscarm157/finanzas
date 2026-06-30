@@ -16,7 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Desarrollo Personal",
-  description: "Tu super-app de desarrollo personal: hábitos, finanzas y más.",
+  description: "Hábitos, finanzas y desarrollo personal en un solo lugar.",
 };
 
 export default function RootLayout({
