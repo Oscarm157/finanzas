@@ -35,8 +35,7 @@ export function HabitCard({ habit, cells }: { habit: Habit; cells: GridCell[] })
 
   return (
     <motion.div
-      className="flex flex-col gap-4 rounded-[20px] border p-5"
-      style={{ background: "var(--h-surface)", borderColor: "var(--h-border)" }}
+      className="flex flex-col gap-4 rounded-lg border border-line bg-card p-5 shadow-sm"
       initial={reduced ? false : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
@@ -45,19 +44,16 @@ export function HabitCard({ habit, cells }: { habit: Habit; cells: GridCell[] })
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
           <div
-            className="flex size-9 shrink-0 items-center justify-center rounded-xl"
+            className="flex size-9 shrink-0 items-center justify-center rounded-md"
             style={{ background: `${habit.color}22` }}
           >
-            <span
-              className="text-xl"
-              style={{ filter: `drop-shadow(0 0 6px ${habit.color}40)` }}
-            >
+            <span className="text-xl" style={{ color: habit.color }}>
               ✦
             </span>
           </div>
           <div className="min-w-0">
-            <p className="truncate font-display font-semibold text-[var(--h-text)]">{habit.name}</p>
-            <p className="text-xs text-[var(--h-text-faint)]">
+            <p className="truncate font-semibold text-navy">{habit.name}</p>
+            <p className="text-xs text-faint">
               {habit.targetPerDay === 1 ? "Una vez al día" : `${habit.targetPerDay}× al día`}
             </p>
           </div>
@@ -72,10 +68,10 @@ export function HabitCard({ habit, cells }: { habit: Habit; cells: GridCell[] })
       <motion.button
         onClick={handleToggle}
         disabled={pending}
-        className="mt-1 w-full rounded-full py-2 text-sm font-semibold transition-opacity disabled:opacity-60"
+        className="mt-1 w-full rounded-lg py-2 text-sm font-semibold transition-opacity disabled:opacity-60"
         style={{
           background: completedToday ? `${habit.color}22` : habit.color,
-          color: completedToday ? habit.color : "#141320",
+          color: completedToday ? habit.color : "var(--h-on-accent)",
         }}
         whileTap={reduced ? {} : { scale: 0.97 }}
       >
