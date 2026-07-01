@@ -1,4 +1,4 @@
-# DESIGN.md — Super-app de desarrollo personal
+# DESIGN.md — Second Brain
 
 Dirección visual congelada para mantener consistencia entre módulos (Hábitos, Finanzas, y los que
 vengan). Es una app in-app de datos personales, gamificada tipo HabitKit. El "wow" lo dan los heatmaps
@@ -84,7 +84,7 @@ Los nombres son roles de token; el valor cambia por modo. `light` es el default.
   desbloqueados vs bloqueados). Números display grandes.
 - **Inputs / formularios:** fondo superficie, borde sutil, foco con anillo de acento; picker de color
   e icono al crear hábito.
-- **Navegación:** sidebar fija oscura, agrupada por secciones (Desarrollo personal / Finanzas), con
+- **Navegación:** sidebar fija oscura, agrupada por secciones (Finanzas / Personal), con
   link al Hub arriba; ruta activa marcada con el acento.
 
 ## Layout y espaciado

@@ -15,8 +15,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Desarrollo Personal",
-  description: "Hábitos, finanzas y desarrollo personal en un solo lugar.",
+  title: "Second Brain",
+  description: "Hábitos, finanzas, pendientes y código en un solo lugar.",
 };
 
 export default function RootLayout({

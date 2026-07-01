@@ -37,7 +37,7 @@ const sections: NavSection[] = [
     ],
   },
   {
-    title: "Desarrollo personal",
+    title: "Personal",
     items: [
       { href: "/habitos", label: "Hábitos", icon: Flame },
       { href: "/pendientes", label: "Pendientes", icon: ListChecks },
@@ -99,10 +99,10 @@ export function Sidebar({ name }: { name: string }) {
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-line bg-card lg:flex">
         <Link href="/" className="flex items-center gap-2 px-5 py-5">
           <span className="flex size-7 items-center justify-center rounded-md bg-brand text-[11px] font-bold text-white">
-            DP
+            SB
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-navy">
-            Desarrollo Personal
+            Second Brain
           </span>
         </Link>
         <nav className="flex flex-1 flex-col overflow-y-auto px-3 pb-3">
@@ -133,10 +133,10 @@ export function Sidebar({ name }: { name: string }) {
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
             <span className="flex size-6 items-center justify-center rounded-md bg-brand text-[10px] font-bold text-white">
-              DP
+              SB
             </span>
             <span className="font-display text-base font-bold tracking-tight text-navy">
-              Desarrollo Personal
+              Second Brain
             </span>
           </Link>
           <div className="flex items-center gap-1">
