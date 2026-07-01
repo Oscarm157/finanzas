@@ -30,18 +30,15 @@ export default async function HabitosPage() {
   const gridMap = new Map(grids.map((g) => [g.habitId, g.cells]));
 
   return (
-    <div
-      className="min-h-full"
-      style={{ background: "var(--h-canvas)", color: "var(--h-text)" }}
-    >
-      <div className="mx-auto max-w-[1400px] space-y-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+    <div className="min-h-full bg-surface">
+      <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         {/* Header */}
         <header className="flex items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--h-text)]">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-navy">
               Hábitos
             </h1>
-            <p className="mt-1 text-sm text-[var(--h-text-secondary)]">Tus rutinas.</p>
+            <p className="mt-1 text-sm text-ink">Tus rutinas.</p>
           </div>
           <HabitFormTrigger />
         </header>
@@ -59,12 +56,12 @@ export default async function HabitosPage() {
 
         {/* Habit grid or empty */}
         {habitsList.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--h-border)] py-16 text-center">
-            <p className="text-[var(--h-text-secondary)]">Todavía no tienes hábitos.</p>
-            <p className="mt-1 text-sm text-[var(--h-text-faint)]">Crea el primero.</p>
+          <div className="rounded-lg border border-line bg-card py-16 text-center shadow-sm">
+            <p className="text-ink">Todavía no tienes hábitos.</p>
+            <p className="mt-1 text-sm text-faint">Crea el primero.</p>
           </div>
         ) : (
-          <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {habitsList.map((h) => (
               <HabitCard key={h.id} habit={h} cells={gridMap.get(h.id) ?? []} />
             ))}

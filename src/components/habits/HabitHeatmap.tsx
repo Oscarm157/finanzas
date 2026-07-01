@@ -5,7 +5,7 @@ import type { GridCell } from "@/lib/habits/data";
 
 function cellBackground(hex: string, intensity: 0 | 1 | 2 | 3 | 4): string {
   // Celda vacía: superficie neutra (token), para que se lea tanto en claro como en oscuro.
-  if (intensity === 0) return "var(--h-surface-2)";
+  if (intensity === 0) return "var(--secondary)";
   const alphas: Record<number, number> = { 1: 0.25, 2: 0.5, 3: 0.75, 4: 1 };
   const a = alphas[intensity];
   const r = parseInt(hex.slice(1, 3), 16);
