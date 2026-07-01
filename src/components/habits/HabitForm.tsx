@@ -51,7 +51,7 @@ export function HabitFormTrigger() {
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
-          style={{ background: "rgba(0,0,0,0.7)" }}
+          style={{ background: "var(--overlay)" }}
         >
           <div
             className="w-full max-w-md space-y-5 rounded-2xl p-6"

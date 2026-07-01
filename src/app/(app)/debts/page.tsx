@@ -89,7 +89,7 @@ export default async function DebtsPage() {
                 </p>
               </div>
               <div className="sm:w-1/2">
-                <div className="h-3 overflow-hidden rounded-full bg-white/10">
+                <div className="h-3 overflow-hidden rounded-full bg-hero-foreground/10">
                   <div
                     className="h-full rounded-full bg-income"
                     style={{ width: `${Math.round(progresoGlobal * 100)}%` }}

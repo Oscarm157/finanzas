@@ -219,7 +219,7 @@ export function TransactionsTable({
                         />
                         <span
                           className="size-2.5 shrink-0 rounded-full"
-                          style={{ backgroundColor: t.categoryColor ?? "#cbd2dd" }}
+                          style={{ backgroundColor: t.categoryColor ?? "var(--faint)" }}
                         />
                         <span className="truncate text-navy hover:text-brand">
                           {t.counterparty ?? t.description}

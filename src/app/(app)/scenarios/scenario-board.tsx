@@ -114,8 +114,8 @@ export function ScenarioBoard({
     <div className="overflow-hidden rounded-xl border border-line bg-card">
       <div
         className={cn(
-          "px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-white",
-          accent === "Ingresos" ? "bg-income" : "bg-expense",
+          "px-4 py-2.5 text-xs font-semibold uppercase tracking-wide",
+          accent === "Ingresos" ? "bg-income text-income-foreground" : "bg-expense text-expense-foreground",
         )}
       >
         {accent}

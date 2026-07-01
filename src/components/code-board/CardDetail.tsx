@@ -92,7 +92,7 @@ export function CardDetail({
           <button
             onClick={onDelete}
             disabled={pending}
-            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[var(--h-text-secondary)] hover:bg-[var(--h-surface-2)] hover:text-[#f87171]"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[var(--h-text-secondary)] hover:bg-[var(--h-surface-2)] hover:text-alert"
           >
             <Trash2 className="size-3.5" /> Borrar
           </button>

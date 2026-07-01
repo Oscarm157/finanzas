@@ -53,6 +53,18 @@
   /* Panel "hero" oscuro de finanzas (invierte: oscuro en light, elevado en dark) */
   --hero: #16203a;
   --hero-foreground: #ffffff;
+  /* Acentos del hero (invariantes: el panel es siempre oscuro en ambos temas) */
+  --hero-positive: #34d27b;
+  --hero-negative: #ff7a7a;
+  --hero-in: #0f9d58;
+  --hero-out: #3b6dff;
+
+  /* Texto sobre relleno saturado income/expense (invierte: blanco en light, ink oscuro en dark) */
+  --income-foreground: #ffffff;
+  --expense-foreground: #ffffff;
+
+  /* Scrim de overlays/modales */
+  --overlay: rgba(0, 0, 0, 0.6);
 
   /* Familia gamificada (--h-*) en LIGHT. Los 8 acentos por hábito son dato en
      DB y no cambian por tema; viven aquí y se heredan dentro de .dark. */
@@ -75,6 +87,9 @@
   --h-orange: #fb923c;
   --h-amber: #fbbf24;
   --h-lime: #a3e635;
+  /* Ink para texto sobre un acento saturado (color de hábito, --h-blue, etc.). Invariante:
+     esos rellenos no cambian por tema, así que el ink tampoco. */
+  --h-on-accent: #0b1020;
 }
 
 @theme inline {
@@ -112,6 +127,9 @@
   --color-alert: var(--alert);
   --color-hero: var(--hero);
   --color-hero-foreground: var(--hero-foreground);
+  --color-income-foreground: var(--income-foreground);
+  --color-expense-foreground: var(--expense-foreground);
+  --color-overlay: var(--overlay);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-display);
@@ -176,6 +194,11 @@
   --alert: #f43f5e;
   --hero: #29273f;
   --hero-foreground: #f7f7ff;
+
+  --income-foreground: #0b1020;
+  --expense-foreground: #0b1020;
+
+  --overlay: rgba(0, 0, 0, 0.72);
 
   --h-canvas: #141320;
   --h-canvas-alt: #191826;

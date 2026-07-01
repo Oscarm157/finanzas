@@ -76,7 +76,7 @@ export function CategoryForm({ parents }: { parents: Parent[] }) {
               onClick={() => setKind("income")}
               className={cn(
                 "h-7 rounded px-3 text-xs font-medium transition-colors",
-                effectiveKind === "income" ? "bg-income text-white" : "text-ink hover:bg-surface",
+                effectiveKind === "income" ? "bg-income text-income-foreground" : "text-ink hover:bg-surface",
               )}
             >
               Ingreso

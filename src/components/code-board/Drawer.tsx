@@ -30,7 +30,7 @@ export function Drawer({
       <button
         aria-label="Cerrar"
         onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-overlay backdrop-blur-sm"
       />
       <aside
         className="relative flex h-full w-full max-w-xl flex-col border-l border-[var(--h-border)] shadow-2xl"

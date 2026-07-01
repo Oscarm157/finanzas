@@ -67,7 +67,7 @@ export function TodayList({ habits }: { habits: TodayHabit[] }) {
               className="flex size-6 shrink-0 items-center justify-center rounded-full"
               style={{ background: h.color }}
             >
-              <span className="text-xs text-[#141320]">✓</span>
+              <span className="text-xs text-[var(--h-on-accent)]">✓</span>
             </div>
             <div
               className="flex size-6 shrink-0 items-center justify-center rounded-lg text-sm"

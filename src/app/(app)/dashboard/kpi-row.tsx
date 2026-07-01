@@ -63,7 +63,7 @@ export function KpiRow({
           </span>
           <div
             className="mt-2 font-display text-4xl font-bold leading-none sm:text-5xl"
-            style={{ color: positivo ? "#34d27b" : "#ff7a7a" }}
+            style={{ color: positivo ? "var(--hero-positive)" : "var(--hero-negative)" }}
           >
             {!positivo && "-"}
             <CountUp value={Math.abs(balance)} />
@@ -76,21 +76,21 @@ export function KpiRow({
           </p>
         </div>
 
-        <div className="lg:border-l lg:border-white/10 lg:pl-12">
-          <div className="flex h-2.5 overflow-hidden rounded-full bg-white/10">
+        <div className="lg:border-l lg:border-hero-foreground/10 lg:pl-12">
+          <div className="flex h-2.5 overflow-hidden rounded-full bg-hero-foreground/10">
             <motion.div
               initial={reduce ? false : { width: 0 }}
               animate={{ width: `${inShare}%` }}
               transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              style={{ backgroundColor: "#0f9d58" }}
+              style={{ backgroundColor: "var(--hero-in)" }}
             />
-            <div className="flex-1" style={{ backgroundColor: "#3b6dff" }} />
+            <div className="flex-1" style={{ backgroundColor: "var(--hero-out)" }} />
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-4">
             <div>
               <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-hero-foreground/45">
-                <span className="size-2 rounded-full" style={{ backgroundColor: "#34d27b" }} />
+                <span className="size-2 rounded-full" style={{ backgroundColor: "var(--hero-positive)" }} />
                 Entró
               </div>
               <div className="mt-1 font-display text-xl font-semibold tabular-nums">
@@ -99,7 +99,7 @@ export function KpiRow({
             </div>
             <div>
               <div className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-hero-foreground/45">
-                <span className="size-2 rounded-full" style={{ backgroundColor: "#3b6dff" }} />
+                <span className="size-2 rounded-full" style={{ backgroundColor: "var(--hero-out)" }} />
                 Salió
               </div>
               <div className="mt-1 font-display text-xl font-semibold tabular-nums text-hero-foreground/90">
